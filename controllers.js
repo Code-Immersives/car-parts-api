@@ -1,4 +1,5 @@
 const cars = require('./cars')
+const hello = 'test'
 
 module.exports = {
   car: {
