@@ -2,9 +2,13 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const logger = require('morgan')
-const carRoutes = require('./carsRouter')
+const carRoutes = require('./routes').carsRouter
+const bodyParser = require('body-parser')
 // using 3rd party middleware
 app.use(logger('dev'))
+// use the body-parser middleware to access req.body
+// parse application/json
+app.use(bodyParser.json())
 // make routes availble to client
 app.use('/api/v1', carRoutes)
 // run your server to listen on a given port

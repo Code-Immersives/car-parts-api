@@ -1,5 +1,5 @@
 // import the data from a model which will be the database soon
-const cars = require('./cars')
+const cars = require('../models').carModel
 
 // export an object that has the car controller methods
 module.exports = {
@@ -19,5 +19,17 @@ module.exports = {
     } else {
       res.json({message: `no cars found with given value: ${req.params.idORmake}`, status: 204})
     }
+  },
+  create: function (req, res) {
+    // this is allowed because of my body-parser middleware in server.js
+    let newCar = req.body
+    console.log('data from request body', req.body)
+    res.json(newCar)
+  },
+  update: function (req, res) {
+    let myCar = cars.find(car => car.id == req.params.idORmake)
+    console.log('data from request', myCar, req.params.idORmake, req.body)
+    myCar = {...myCar, ...req.body}
+    res.json(myCar)
   }
 }
