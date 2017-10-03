@@ -29,6 +29,7 @@ module.exports = {
   update: function (req, res) {
     let myCar = cars.find(car => car.id == req.params.idORmake)
     console.log('data from request', myCar, req.params.idORmake, req.body)
+    // {make: "honda", model: "civic", year: 2017, id: 11}
     myCar = {...myCar, ...req.body}
     res.json(myCar)
   }
