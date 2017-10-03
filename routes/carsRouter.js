@@ -12,9 +12,6 @@ CarsRouter.route('/cars')
 CarsRouter.route('/cars/:idORmake')
   .get(carsController.getSingle)
   .put(carsController.update)
-  .delete((req, res) => {
-    let newCars = cars.filter(car => car.id != req.params.idORmake)
-    res.json(newCars)
-  })
+  .delete(carsController.destroy)
 // export the cars router object
 module.exports = CarsRouter

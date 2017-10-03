@@ -32,5 +32,9 @@ module.exports = {
     // {make: "honda", model: "civic", year: 2017, id: 11}
     myCar = {...myCar, ...req.body}
     res.json(myCar)
+  },
+  destroy: function (req, res) {
+    let newCars = cars.filter(car => car.id != req.params.idORmake)
+    res.json(newCars)
   }
 }
