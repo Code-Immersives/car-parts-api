@@ -4,6 +4,13 @@ const port = process.env.PORT || 3000
 const logger = require('morgan')
 const carRoutes = require('./routes').carsRouter
 const bodyParser = require('body-parser')
+
+// MONGODB SETUP
+// brew install MONGODB
+// mongod to start server
+// sudo mkdir -p data/db
+// sudo chown -R toneloke ./data/db
+
 // using 3rd party middleware
 app.use(logger('dev'))
 // use the body-parser middleware to access req.body
