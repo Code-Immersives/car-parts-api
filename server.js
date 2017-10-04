@@ -10,6 +10,15 @@ const bodyParser = require('body-parser')
 // mongod to start server
 // sudo mkdir -p data/db
 // sudo chown -R toneloke ./data/db
+const mongoose = require('mongoose')
+// establish a connection to the database
+mongoose.connect('mongodb://localhost/cars', (err) => {
+  if (err) {
+    console.log('error connecting to mongodb:', err)
+  } else {
+    console.log('successfully connecting to mongodb cars db')
+  }
+})
 
 // using 3rd party middleware
 app.use(logger('dev'))

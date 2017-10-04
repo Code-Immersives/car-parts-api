@@ -1,5 +1,5 @@
-const carModel = require('./cars')
+const Car = require('./car')
 
 module.exports = {
-  carModel
+  Car
 }
