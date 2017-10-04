@@ -1,11 +1,15 @@
 
 // import the data from a model which will be the database soon
-const cars = require('../models').carModel
+const Car = require('../models').Car
 
 // export an object that has the car controller methods
 module.exports = {
   getAll: function (req, res) {
-    res.json(cars)
+    Car.find({}, (err, cars) => {
+      if (err) res.json({message: err, status: 204})
+      // sending the cars collection to the user
+      res.json(cars)
+    })
   },
   getSingle: function (req, res) {
     let matchTerm = Number.parseInt(req.params.idORmake)
