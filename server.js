@@ -12,7 +12,7 @@ const bodyParser = require('body-parser')
 // sudo chown -R toneloke ./data/db
 const mongoose = require('mongoose')
 // establish a connection to the database
-mongoose.connect('mongodb://localhost/cars', (err) => {
+mongoose.connect('mongodb://localhost/cars', err => {
   if (err) {
     console.log('error connecting to mongodb:', err)
   } else {

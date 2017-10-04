@@ -12,34 +12,39 @@ module.exports = {
     })
   },
   getSingle: function (req, res) {
-    let matchTerm = Number.parseInt(req.params.idORmake)
-    let myCar
-    if (matchTerm > 0) {
-      myCar = cars.filter(car => matchTerm == car.id)
+    let objectID = Number.parseInt(req.params.idORmake)
+    if (objectID > 0) {
+      // search database by id
+      Car.find({_id: req.params.idORmake }, (err, car) => {
+        if (err) res.json({message: err, status: 204})
+        if (!err) res.json(car)
+      })
     } else {
-      myCar = cars.filter(car => req.params.idORmake == car.make)
-    }
-    if (myCar.length > 0) {
-      res.json(myCar)
-    } else {
-      res.json({message: `no cars found with given value: ${req.params.idORmake}`, status: 204})
+      // search database by make
+      Car.find({ make: req.params.idORmake }, (err, car) => {
+        if (err) res.json({message: err, status: 204})
+        if (!err) res.json(car)
+      })
     }
   },
   create: function (req, res) {
     // this is allowed because of my body-parser middleware in server.js
-    let newCar = req.body
-    console.log('data from request body', req.body)
-    res.json(newCar)
+    let newCar = new Car(req.body)
+    newCar.save((err, car) => {
+      if (err) res.json({message: err, status: 302})
+      res.json(car)
+    })
   },
   update: function (req, res) {
-    let myCar = cars.find(car => car.id == req.params.idORmake)
-    console.log('data from request', myCar, req.params.idORmake, req.body)
-    // {make: "honda", model: "civic", year: 2017, id: 11}
-    myCar = {...myCar, ...req.body}
-    res.json(myCar)
+    Car.findOneAndUpdate({_id: req.params.idORmake}, req.body, {new: true}, (err, car) => {
+      if (err) res.json({message: err, status: 304})
+      res.json(car)
+    })
   },
   destroy: function (req, res) {
-    let newCars = cars.filter(car => car.id != req.params.idORmake)
-    res.json(newCars)
+    Car.findOneAndRemove({_id: req.params.idORmake}, (err) => {
+      if (err) res.json({message: err, status: 304})
+      res.json({message: `Car with ${req.params.idORmake} deleted`, status: 200})
+    })
   }
 }
