@@ -3,6 +3,7 @@ const app = express()
 const port = process.env.PORT || 3000
 const logger = require('morgan')
 const carRoutes = require('./routes').carsRouter
+const partRoutes = require('./routes').partsRouter
 const bodyParser = require('body-parser')
 
 // MONGODB SETUP
@@ -27,6 +28,7 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 // make routes availble to client
 app.use('/api/v1', carRoutes)
+app.use('/api/v1', partRoutes)
 // run your server to listen on a given port
 app.listen(port, (err) => {
   // check for an error when communicating with the server
