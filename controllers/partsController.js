@@ -1,12 +1,36 @@
 const Part = require('../models').Part
+const Car = require('../models').Car
 
 module.exports = {
   getAll: function (req, res) {
-    Part.find({}, (err, parts) => {
-      if (err) res.json({message: err, status: 204})
-      // sending the parts collection to the user
-      res.json(parts)
-    })
+    console.log('coming from the url', req.query.make)
+    if (req.query.make) {
+      Car.find({ make: req.query.make}, (err, cars) => {
+        if (err) res.json(err)
+        console.log(cars)
+        if (cars.length === 0) {
+          res.json({message: `no cars found with make: ${req.query.make}`})
+        } else {
+          let carIDs = cars.map(c => c._id.toString())
+          console.log('car ids', carIDs)
+          Part.find({})
+          .where('cars').in(carIDs)
+          .exec((err, parts) => {
+            if (err) res.json(err)
+            if (!err) res.json(parts)
+          })
+        }
+      })
+    } else {
+      Part.find({})
+        .exec((err, parts) => {
+          if (err) {
+            res.json(err)
+          } else {
+            res.json(parts)
+          }
+        })
+    }
   },
   getSingle: function (req, res) {
     Part.find({_id: req.params.id }, (err, part) => {
