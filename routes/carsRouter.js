@@ -3,6 +3,7 @@ const CarsRouter = require('express').Router()
 // bring in the cars controller methods
 const carsController = require('../controllers').carsController
 // Building all of our express routes for the car parts api
+// query string for searching by different params
 CarsRouter.route('/cars')
 // retrieve all my cars from the db
   .get(carsController.getAll)
