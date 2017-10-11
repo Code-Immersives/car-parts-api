@@ -1,7 +1,5 @@
-
 // import the data from a model which will be the database soon
 const Car = require('../models').Car
-
 // export an object that has the car controller methods
 module.exports = {
   getAll: function (req, res) {

@@ -1,16 +1,15 @@
 const mongoose = require('mongoose'),
-  Schema = mongoose.Schema
+  Schema = mongoose.Schema,
+  Part = require('./part')
 
 let carSchema = new Schema({
   make: String,
   model: String,
   year: Number,
   color: String,
-  currParts: []
+  currParts: [{ type: Schema.Types.ObjectId, ref: 'part' }]
 })
 
-// model methods
-// pre after create update built in callbacks
 let Car = mongoose.model('car', carSchema)
 
 module.exports = Car
