@@ -7,11 +7,10 @@ module.exports = {
     if (req.query.make) {
       Car.find({ make: req.query.make}, (err, cars) => {
         if (err) res.json(err)
-        console.log(cars)
         if (cars.length === 0) {
           res.json({message: `no cars found with make: ${req.query.make}`})
         } else {
-          let carIDs = cars.map(c => c._id.toString())
+          let carIDs = cars.map(car => car._id.toString())
           console.log('car ids', carIDs)
           Part.find({})
           .where('cars').in(carIDs)
@@ -33,7 +32,8 @@ module.exports = {
     }
   },
   getSingle: function (req, res) {
-    Part.find({_id: req.params.id }, (err, part) => {
+    Part.find({_id: req.params.id })
+    .exec((err, part) => {
       if (err) res.json({message: err, status: 204})
       if (!err) res.json(part)
     })
